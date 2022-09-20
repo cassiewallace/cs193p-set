@@ -15,6 +15,7 @@
 		CBEFABC228DA028400273F61 /* ShapeSetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFABC128DA028400273F61 /* ShapeSetGame.swift */; };
 		CBEFABC628DA05B200273F61 /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFABC528DA05B200273F61 /* AspectVGrid.swift */; };
 		CBEFABC828DA06F300273F61 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFABC728DA06F300273F61 /* Card.swift */; };
+		CBEFABCA28DA172D00273F61 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFABC928DA172D00273F61 /* Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		CBEFABC128DA028400273F61 /* ShapeSetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeSetGame.swift; sourceTree = "<group>"; };
 		CBEFABC528DA05B200273F61 /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 		CBEFABC728DA06F300273F61 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		CBEFABC928DA172D00273F61 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				CBEFABB128D9FC8C00273F61 /* SetApp.swift */,
 				CBEFABB328D9FC8C00273F61 /* ShapeSetGameView.swift */,
 				CBEFABC728DA06F300273F61 /* Card.swift */,
+				CBEFABC928DA172D00273F61 /* Theme.swift */,
 				CBEFABC528DA05B200273F61 /* AspectVGrid.swift */,
 				CBEFABBF28DA027200273F61 /* SetGame.swift */,
 				CBEFABC128DA028400273F61 /* ShapeSetGame.swift */,
@@ -155,6 +158,7 @@
 				CBEFABC028DA027200273F61 /* SetGame.swift in Sources */,
 				CBEFABC628DA05B200273F61 /* AspectVGrid.swift in Sources */,
 				CBEFABB228D9FC8C00273F61 /* SetApp.swift in Sources */,
+				CBEFABCA28DA172D00273F61 /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

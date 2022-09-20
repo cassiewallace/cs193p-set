@@ -11,6 +11,14 @@ struct Card: View {
     let card: ShapeSetGame.Card
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius).stroke(lineWidth: DrawingConstants.lineWidth)
+            Text(card.content)
+        }
+    }
+    
+    private struct DrawingConstants {
+        static let cornerRadius: CGFloat = 10
+        static let lineWidth: CGFloat = 0.5
     }
 }

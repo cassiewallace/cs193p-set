@@ -25,7 +25,11 @@ class ShapeSetGame: ObservableObject {
     
     // MARK: Private Static Func(s)
     private static func createSetGame() -> SetGame<String> {
-        return SetGame<String>()
+        let themeModel = GameTheme()
+        
+        let shapes = themeModel.shapes
+    
+        return SetGame<String>(cardTypes: shapes)
     }
     
 }

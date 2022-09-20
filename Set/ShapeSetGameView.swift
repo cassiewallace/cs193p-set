@@ -13,9 +13,12 @@ struct ShapeSetGameView: View {
     var body: some View {
         NavigationView {
             VStack {
+            // Started here with the AspectVGrid from class, but I might actually want to
+            // go back to a simpler fixed-column setup like the real game uses.
                 AspectVGrid(items: shapeSetGame.cards, aspectRatio: DrawingConstants.aspectRatio) { card in
                         Card(card: card)
-                }
+                            .padding(DrawingConstants.cardPadding)
+                    }
                 Text("Set Game time!")
             }
             .padding(.horizontal)
@@ -33,6 +36,7 @@ struct ShapeSetGameView: View {
     
     private struct DrawingConstants {
         static let aspectRatio: CGFloat = 2/3
+        static let cardPadding: CGFloat = 5
     }
 }
 
