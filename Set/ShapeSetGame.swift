@@ -5,18 +5,28 @@
 //  Created by Cassie Wallace on 9/20/22.
 //
 
-import Foundation
+import SwiftUI
 
 class ShapeSetGame: ObservableObject {
     // MARK: Public Var(s)
-    typealias Card = SetGame<String>.Card
+    typealias Card = SetGame.Card
     
     var cards: Array<Card> {
         return setGameModel.cards
     }
     
+    // Enable the ShapeSetGameView to only display cards that are
+    // currently in play.
+    var cardsInPlay: Array<Card> {
+        return setGameModel.cardsInPlay
+    }
+    
+    var numberOfCardsLeftToDeal: Int {
+        return setGameModel.numberOfCardsLeftToDeal
+    }
+    
     // MARK: Private Var(s)
-    @Published private var setGameModel: SetGame<String>
+    @Published private var setGameModel: SetGame
     
     // MARK: Init(s)
     init() {
@@ -24,12 +34,22 @@ class ShapeSetGame: ObservableObject {
     }
     
     // MARK: Private Static Func(s)
-    private static func createSetGame() -> SetGame<String> {
-        let themeModel = GameTheme()
-        
-        let shapes = themeModel.shapes
-    
-        return SetGame<String>(cardTypes: shapes)
+    private static func createSetGame() -> SetGame {        
+        return SetGame()
     }
     
+    // MARK: - Intent(s)
+    func startNewGame() {
+        setGameModel =  Self.createSetGame()
+    }
+    
+    func select(_ card: Card) {
+        setGameModel.select(card)
+    }
+    
+    // Deals a specific number of cards.
+    func dealCards(_ numberOfCards: Int) {
+        setGameModel.dealCards(numberOfCards)
+    }
 }
+

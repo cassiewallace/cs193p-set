@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct AspectVGrid<Item, ItemView>: View where ItemView: View, Item: Identifiable {
+    // TODO: Rewrite to adhere to the normal way the game works. Make all the cards smaller if/when more cards are added, center and space them.
     var items: [Item]
     var aspectRatio: CGFloat
     var content: (Item) -> ItemView

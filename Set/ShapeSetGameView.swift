@@ -9,28 +9,32 @@ import SwiftUI
 
 struct ShapeSetGameView: View {
     @ObservedObject var shapeSetGame: ShapeSetGame
-
+    
     var body: some View {
         NavigationView {
             VStack {
-            // Started here with the AspectVGrid from class, but I might actually want to
-            // go back to a simpler fixed-column setup like the real game uses.
-                AspectVGrid(items: shapeSetGame.cards, aspectRatio: DrawingConstants.aspectRatio) { card in
+                AspectVGrid(items: shapeSetGame.cardsInPlay, aspectRatio: DrawingConstants.aspectRatio) { card in
                         Card(card: card)
                             .padding(DrawingConstants.cardPadding)
+                            .onTapGesture{
+                                shapeSetGame.select(card)
+                            }
                     }
-                Text("Set Game time!")
             }
             .padding(.horizontal)
             .navigationBarTitle("Set", displayMode: .inline)
             .navigationBarItems(leading:
-                Button {} label: {
+                Button {
+                    shapeSetGame.startNewGame()} label: {
                     Text("New Game")
             })
             .navigationBarItems(trailing:
-                Button {} label: {
+                Button {
+                    shapeSetGame.dealCards(3)} label: {
                     Text("Deal 3")
-            })
+            }
+            .disabled(shapeSetGame.numberOfCardsLeftToDeal == 0)
+            )
         }
     }
     
