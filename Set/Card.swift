@@ -34,19 +34,19 @@ struct Card: View {
 
         switch shapeFillCombo {
             case (.circle, .empty):
-                Circle().stroke(lineWidth: 2)
+                Circle().stroke(lineWidth: DrawingConstants.shapeLineWidth)
             case (.diamond, .empty):
-                Diamond().stroke(lineWidth: 2)
+                Diamond().stroke(lineWidth: DrawingConstants.shapeLineWidth)
             case (.squiggle, .empty):
-                RoundedRectangle(cornerRadius: 2).stroke(lineWidth: 2)
+                RoundedRectangle(cornerRadius: DrawingConstants.shapeCornerRadius).stroke(lineWidth: DrawingConstants.shapeLineWidth)
             case (.circle, .solid):
                 Circle().fill()
             case (.diamond, .solid):
                 Diamond().fill()
             case (.squiggle, .solid):
-                RoundedRectangle(cornerRadius: 2).fill()
+                RoundedRectangle(cornerRadius: DrawingConstants.shapeCornerRadius).fill()
             case (.circle, .shaded):
-                Circle().strokeBorder(lineWidth: 2)
+                Circle().strokeBorder(lineWidth: DrawingConstants.shapeLineWidth)
                     .background(Circle()
                         .foregroundStyle(
                             .linearGradient(
@@ -55,7 +55,7 @@ struct Card: View {
                                 endPoint: .bottom
                             )))
             case (.diamond, .shaded):
-                Diamond().stroke(lineWidth: 2)
+                Diamond().stroke(lineWidth: DrawingConstants.shapeLineWidth)
                     .background(Diamond()
                         .foregroundStyle(
                             .linearGradient(
@@ -64,8 +64,8 @@ struct Card: View {
                                 endPoint: .bottom
                             )))
             case (.squiggle, .shaded):
-                RoundedRectangle(cornerRadius: 2).strokeBorder(lineWidth: 2)
-                    .background(RoundedRectangle(cornerRadius: 2)
+                RoundedRectangle(cornerRadius: DrawingConstants.shapeCornerRadius).strokeBorder(lineWidth: DrawingConstants.shapeLineWidth)
+                    .background(RoundedRectangle(cornerRadius: DrawingConstants.shapeCornerRadius)
                         .foregroundStyle(
                             .linearGradient(
                                 colors: [.white, color],
@@ -77,9 +77,9 @@ struct Card: View {
     
     var body: some View {
         ZStack {
-            let cardOutline = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
+            let cardOutline = RoundedRectangle(cornerRadius: DrawingConstants.cardCornerRadius)
             cardOutline.fill().foregroundColor(.white)
-            cardOutline.stroke(lineWidth: card.isCurrentlySelected ? DrawingConstants.lineWidth * 3 : DrawingConstants.lineWidth)
+            cardOutline.stroke(lineWidth: card.isCurrentlySelected ? DrawingConstants.cardLineWidth * 3 : DrawingConstants.cardLineWidth)
         
             VStack {
                 ForEach(0..<card.numberOfShapes + 1, id: \.self) { _ in
@@ -97,7 +97,9 @@ struct Card: View {
     }
     
     private struct DrawingConstants {
-        static let cornerRadius: CGFloat = 10
-        static let lineWidth: CGFloat = 0.5
+        static let cardCornerRadius: CGFloat = 10
+        static let cardLineWidth: CGFloat = 0.5
+        static let shapeCornerRadius: CGFloat = 16
+        static let shapeLineWidth: CGFloat = 2
     }
 }

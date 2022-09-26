@@ -90,6 +90,8 @@ struct SetGame {
                 } else {
                     print("It's not a match.")
                     // TODO: Show a mismatch.
+                    // QUESTION: Need help on how to do this.
+                    // QUESTION: General cleanup.
                 }
             }
         }
@@ -102,7 +104,6 @@ struct SetGame {
                 cards[index].isInPlay = true
             }
             numberOfCardsLeftToDeal -= numberOfCards
-            // TODO: Check if there are any more matches on the board. I don't think it happens in here, but it will happen when there are no more cards left to do.
         }
     }
     
