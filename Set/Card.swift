@@ -25,8 +25,8 @@ struct Card: View {
     
     // MARK: Public Func(s)
     
-    // I did it this way because if you split it into 2 ViewBuilders, the Shape one has to return `some View`, and then you can't use `ViewModifier`s like `.stroke` and `.fill()`, which are only available on `Shape`, and then it starts getting messy.
-    // QUESTION: Can I move this up to the ShapeSetGame, or recreate a ViewModel for Cards specifically? Right now, the View is communicating direectly with the model. But it also does that for other things technically?
+    // QUESTION: I did it this way because if you split it into 2 ViewBuilders, the Shape one has to return `some View`, and then you can't use `ViewModifier`s like `.stroke` and `.fill()`, which are only available on `Shape`, and then it starts getting messy. Would another mechanism help here?
+    // QUESTION: Can I move this up to the ShapeSetGame, or recreate a ViewModel for Cards specifically? Right now, the View is communicating directly with the model. But it also does that for other things technically?
     @ViewBuilder
     func shapeBuilder(shape: SetGame.ShapeType, fill: SetGame.FillType, color: Color) -> some View {
 
@@ -79,12 +79,8 @@ struct Card: View {
         ZStack {
             let cardOutline = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
             cardOutline.fill().foregroundColor(.white)
-            
-            if !card.isCurrentlySelected {
-                cardOutline.stroke(lineWidth: DrawingConstants.lineWidth)
-            } else if card.isCurrentlySelected {
-                cardOutline.stroke(lineWidth: DrawingConstants.lineWidth * 3)
-            }
+            cardOutline.stroke(lineWidth: card.isCurrentlySelected ? DrawingConstants.lineWidth * 3 : DrawingConstants.lineWidth)
+        
             VStack {
                 ForEach(0..<card.numberOfShapes + 1, id: \.self) { _ in
                 shapeBuilder(shape: card.shape, fill: card.fill, color: shapeColor).frame(maxHeight:40)

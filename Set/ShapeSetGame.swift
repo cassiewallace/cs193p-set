@@ -49,6 +49,7 @@ class ShapeSetGame: ObservableObject {
     
     // Deals a specific number of cards.
     func dealCards(_ numberOfCards: Int) {
+        setGameModel.handleMatch()
         setGameModel.dealCards(numberOfCards)
     }
 }

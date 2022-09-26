@@ -12,13 +12,18 @@ struct SetGame {
     private(set) var cards: Array<Card> = []
     private(set) var numberOfCardsLeftToDeal: Int = 0
     
-    private var selectedCards: Array<Card> {
-        return cards.filter( { $0.isCurrentlySelected == true } )
+    //  QUESTION: What is the difference between Array<Card> and [ Card ]?
+    private var selectedCards: [ Card ] {
+        return cards.filter( { $0.isCurrentlySelected } )
     }
     
     // MARK: Public Var(s)
     var cardsInPlay: Array<Card> {
-        return cards.filter( { $0.isInPlay == true } )
+        return cards.filter( { $0.isInPlay } )
+    }
+    
+    var selectionCount: Int {
+        return selectedCards.count
     }
     
     // MARK: Public Var(s)
@@ -47,33 +52,44 @@ struct SetGame {
             && (c1.fill.rawValue + c2.fill.rawValue + c3.fill.rawValue) % 3 == 0
             && (c1.numberOfShapes + c2.numberOfShapes + c3.numberOfShapes) % 3 == 0
     }
+    
+    mutating func handleMatch() {
+        if selectedCards.count == 3 {
+            let playStatus = isValidMatch(c1: selectedCards[0], c2: selectedCards[1], c3: selectedCards[2]) ? false : true
+            
+            for selectedCard in selectedCards {
+               if let selectedCardIndex = cards.firstIndex(where: { $0.id == selectedCard.id }) {
+                    cards[selectedCardIndex].isCurrentlySelected = false
+                    cards[selectedCardIndex].isInPlay = playStatus
+                }
+            }
+        }
+    }
 
     mutating func select(_ card: Card) {
+        handleMatch()
+        
+        if cardsInPlay.count < 12 {
+            dealCards(3)
+        }
+        
         // Sets a chosenIndex to the index in the current array when the chosen card is.
         // If we simply use the id of the selected card (n = card.id), the nth currently displayed card will be selected. Instead, we want to find the id of the card in the current array, and set that card to selected.
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }) {
-            if selectedCards.count < 3 {
+            if selectionCount < 3 {
                 cards[chosenIndex].isCurrentlySelected.toggle()
             }
-            if selectedCards.count == 3 {
-                if isValidMatch(c1: selectedCards[0],
-                    c2: selectedCards[1],
-                    c3: selectedCards[2]) {
-                    print("It's a match.")
+            
+            if selectionCount == 3 {
+                if isValidMatch(c1: selectedCards[0], c2: selectedCards[1], c3: selectedCards[2]){
                     for selectedCard in selectedCards {
-                        // TODO: The view doesn't update twice, so the result does not display to the users. "Anytime there are 3 cards currently selected, it must be clear to the user whether they are a match or not (and the cards involved in a non-matching trio must look different than the cards look when there are only 1 or 2 cards in the selection)." The assignment indicates to make the cards disappear on the NEXT selection (or tapping Deal 3).
                         if let selectedCardIndex = cards.firstIndex(where: { $0.id == selectedCard.id }) {
                                 cards[selectedCardIndex].isMatched = true
-                                cards[selectedCardIndex].isInPlay = false
                         }
                     }
                 } else {
                     print("It's not a match.")
-                }
-                for selectedCard in selectedCards {
-                    if let selectedCardIndex = cards.firstIndex(where: { $0.id == selectedCard.id }) {
-                            cards[selectedCardIndex].isCurrentlySelected = false
-                    }
+                    // TODO: Show a mismatch.
                 }
             }
         }
