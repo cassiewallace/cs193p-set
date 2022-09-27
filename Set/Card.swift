@@ -10,6 +10,8 @@ import SwiftUI
 struct Card: View {
     // MARK: - Public Var(s)
     let card: ShapeSetGame.Card
+    var isSelected: Bool
+    @Binding public var mismatch: Bool
     
     var numberOfShapes: Int {
         return card.numberOfShapes
@@ -24,9 +26,6 @@ struct Card: View {
     }
     
     // MARK: Public Func(s)
-    
-    // QUESTION: I did it this way because if you split it into 2 ViewBuilders, the Shape one has to return `some View`, and then you can't use `ViewModifier`s like `.stroke` and `.fill()`, which are only available on `Shape`, and then it starts getting messy. Would another mechanism help here?
-    // QUESTION: Can I move this up to the ShapeSetGame, or recreate a ViewModel for Cards specifically? Right now, the View is communicating directly with the model. But it also does that for other things technically?
     @ViewBuilder
     func shapeBuilder(shape: SetGame.ShapeType, fill: SetGame.FillType, color: Color) -> some View {
 
@@ -39,12 +38,15 @@ struct Card: View {
                 Diamond().stroke(lineWidth: DrawingConstants.shapeLineWidth)
             case (.squiggle, .empty):
                 RoundedRectangle(cornerRadius: DrawingConstants.shapeCornerRadius).stroke(lineWidth: DrawingConstants.shapeLineWidth)
+                    .frame(maxWidth: 80, maxHeight: 40)
             case (.circle, .solid):
                 Circle().fill()
             case (.diamond, .solid):
                 Diamond().fill()
             case (.squiggle, .solid):
-                RoundedRectangle(cornerRadius: DrawingConstants.shapeCornerRadius).fill()
+                RoundedRectangle(cornerRadius: DrawingConstants.shapeCornerRadius)
+                    .fill()
+                    .frame(maxWidth: 80, maxHeight: 40)
             case (.circle, .shaded):
                 Circle().strokeBorder(lineWidth: DrawingConstants.shapeLineWidth)
                     .background(Circle()
@@ -64,7 +66,8 @@ struct Card: View {
                                 endPoint: .bottom
                             )))
             case (.squiggle, .shaded):
-                RoundedRectangle(cornerRadius: DrawingConstants.shapeCornerRadius).strokeBorder(lineWidth: DrawingConstants.shapeLineWidth)
+                RoundedRectangle(cornerRadius: DrawingConstants.shapeCornerRadius)
+                    .strokeBorder(lineWidth: DrawingConstants.shapeLineWidth)
                     .background(RoundedRectangle(cornerRadius: DrawingConstants.shapeCornerRadius)
                         .foregroundStyle(
                             .linearGradient(
@@ -72,6 +75,7 @@ struct Card: View {
                                 startPoint: .top,
                                 endPoint: .bottom
                             )))
+                    .frame(maxWidth: 80, maxHeight: 40)
     }
 }
     
@@ -79,7 +83,7 @@ struct Card: View {
         ZStack {
             let cardOutline = RoundedRectangle(cornerRadius: DrawingConstants.cardCornerRadius)
             cardOutline.fill().foregroundColor(.white)
-            cardOutline.stroke(lineWidth: card.isCurrentlySelected ? DrawingConstants.cardLineWidth * 3 : DrawingConstants.cardLineWidth)
+            cardOutline.stroke(lineWidth: isSelected ? DrawingConstants.cardLineWidth * 3 : DrawingConstants.cardLineWidth)
         
             VStack {
                 ForEach(0..<card.numberOfShapes + 1, id: \.self) { _ in
@@ -87,11 +91,14 @@ struct Card: View {
                 }
             }
             .foregroundColor(shapeColor)
-            .padding(15)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
             
             if card.isMatched {
                 cardOutline.foregroundColor(.green)
                 Text("Matched!")
+            } else if mismatch && isSelected {
+                cardOutline.stroke(.red)
             }
         }
     }
@@ -99,7 +106,7 @@ struct Card: View {
     private struct DrawingConstants {
         static let cardCornerRadius: CGFloat = 10
         static let cardLineWidth: CGFloat = 0.5
-        static let shapeCornerRadius: CGFloat = 16
+        static let shapeCornerRadius: CGFloat = 12
         static let shapeLineWidth: CGFloat = 2
     }
 }

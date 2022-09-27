@@ -43,13 +43,20 @@ class ShapeSetGame: ObservableObject {
         setGameModel =  Self.createSetGame()
     }
     
-    func select(_ card: Card) {
-        setGameModel.select(card)
+    func checkForMatch(between selectedCards: [ShapeSetGame.Card]) -> Bool {
+        return setGameModel.isValidMatch(c1: selectedCards[0], c2: selectedCards[1], c3: selectedCards[2])
+    }
+    
+    func handleMatch(between selectedCards: [ShapeSetGame.Card]) {
+        setGameModel.handleMatch(between: selectedCards)
+    }
+    
+    func clearCards() {
+        setGameModel.clearCards()
     }
     
     // Deals a specific number of cards.
     func dealCards(_ numberOfCards: Int) {
-        setGameModel.handleMatch()
         setGameModel.dealCards(numberOfCards)
     }
 }

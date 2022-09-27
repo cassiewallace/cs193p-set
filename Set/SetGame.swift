@@ -12,18 +12,9 @@ struct SetGame {
     private(set) var cards: Array<Card> = []
     private(set) var numberOfCardsLeftToDeal: Int = 0
     
-    //  QUESTION: What is the difference between Array<Card> and [ Card ]?
-    private var selectedCards: [ Card ] {
-        return cards.filter( { $0.isCurrentlySelected } )
-    }
-    
     // MARK: Public Var(s)
     var cardsInPlay: Array<Card> {
         return cards.filter( { $0.isInPlay } )
-    }
-    
-    var selectionCount: Int {
-        return selectedCards.count
     }
     
     // MARK: Public Var(s)
@@ -53,47 +44,29 @@ struct SetGame {
             && (c1.numberOfShapes + c2.numberOfShapes + c3.numberOfShapes) % 3 == 0
     }
     
-    mutating func handleMatch() {
-        if selectedCards.count == 3 {
-            let playStatus = isValidMatch(c1: selectedCards[0], c2: selectedCards[1], c3: selectedCards[2]) ? false : true
-            
-            for selectedCard in selectedCards {
-               if let selectedCardIndex = cards.firstIndex(where: { $0.id == selectedCard.id }) {
-                    cards[selectedCardIndex].isCurrentlySelected = false
-                    cards[selectedCardIndex].isInPlay = playStatus
-                }
+    mutating func handleMatch(between selectedCards: [ShapeSetGame.Card]) {
+        guard isValidMatch(c1: selectedCards[0], c2: selectedCards[1], c3: selectedCards[2]) else {
+            return
+        }
+        
+        for selectedCard in selectedCards {
+            if let selectedCardIndex = cards.firstIndex(where: { $0.id == selectedCard.id }) {
+                    cards[selectedCardIndex].isMatched = true
             }
         }
     }
-
-    mutating func select(_ card: Card) {
-        handleMatch()
+    
+    mutating func clearCards() {
+        let matchedCardsOnTheBoard = cards.filter( { $0.isMatched && $0.isInPlay } )
+        
+        for card in matchedCardsOnTheBoard {
+            if let index = cards.firstIndex(where: { $0.id == card.id } ) {
+                    cards[index].isInPlay = false
+            }
+        }
         
         if cardsInPlay.count < 12 {
             dealCards(3)
-        }
-        
-        // Sets a chosenIndex to the index in the current array when the chosen card is.
-        // If we simply use the id of the selected card (n = card.id), the nth currently displayed card will be selected. Instead, we want to find the id of the card in the current array, and set that card to selected.
-        if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }) {
-            if selectionCount < 3 {
-                cards[chosenIndex].isCurrentlySelected.toggle()
-            }
-            
-            if selectionCount == 3 {
-                if isValidMatch(c1: selectedCards[0], c2: selectedCards[1], c3: selectedCards[2]){
-                    for selectedCard in selectedCards {
-                        if let selectedCardIndex = cards.firstIndex(where: { $0.id == selectedCard.id }) {
-                                cards[selectedCardIndex].isMatched = true
-                        }
-                    }
-                } else {
-                    print("It's not a match.")
-                    // TODO: Show a mismatch.
-                    // QUESTION: Need help on how to do this.
-                    // QUESTION: General cleanup.
-                }
-            }
         }
     }
     
@@ -139,7 +112,6 @@ struct SetGame {
     
     struct Card: Identifiable {
         var isInPlay = false
-        var isCurrentlySelected = false
         var isMatched = false
         let shape: ShapeType
         let color: ColorType
