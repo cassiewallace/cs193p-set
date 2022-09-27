@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CBAB0B5028DA5261000E0B28 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAB0B4F28DA5261000E0B28 /* File.swift */; };
+		CBAB0B5228DBB68D000E0B28 /* Diamond.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAB0B5128DBB68D000E0B28 /* Diamond.swift */; };
 		CBEFABB228D9FC8C00273F61 /* SetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFABB128D9FC8C00273F61 /* SetApp.swift */; };
 		CBEFABB428D9FC8C00273F61 /* ShapeSetGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFABB328D9FC8C00273F61 /* ShapeSetGameView.swift */; };
 		CBEFABB628D9FC9600273F61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBEFABB528D9FC9600273F61 /* Assets.xcassets */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CBAB0B4F28DA5261000E0B28 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		CBAB0B5128DBB68D000E0B28 /* Diamond.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diamond.swift; sourceTree = "<group>"; };
 		CBEFABAE28D9FC8C00273F61 /* Set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Set.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBEFABB128D9FC8C00273F61 /* SetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetApp.swift; sourceTree = "<group>"; };
 		CBEFABB328D9FC8C00273F61 /* ShapeSetGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeSetGameView.swift; sourceTree = "<group>"; };
@@ -59,8 +63,10 @@
 		CBEFABB028D9FC8C00273F61 /* Set */ = {
 			isa = PBXGroup;
 			children = (
+				CBAB0B4F28DA5261000E0B28 /* File.swift */,
 				CBEFABB128D9FC8C00273F61 /* SetApp.swift */,
 				CBEFABB328D9FC8C00273F61 /* ShapeSetGameView.swift */,
+				CBAB0B5128DBB68D000E0B28 /* Diamond.swift */,
 				CBEFABC728DA06F300273F61 /* Card.swift */,
 				CBEFABC528DA05B200273F61 /* AspectVGrid.swift */,
 				CBEFABBF28DA027200273F61 /* SetGame.swift */,
@@ -155,6 +161,8 @@
 				CBEFABC028DA027200273F61 /* SetGame.swift in Sources */,
 				CBEFABC628DA05B200273F61 /* AspectVGrid.swift in Sources */,
 				CBEFABB228D9FC8C00273F61 /* SetApp.swift in Sources */,
+				CBAB0B5028DA5261000E0B28 /* File.swift in Sources */,
+				CBAB0B5228DBB68D000E0B28 /* Diamond.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
