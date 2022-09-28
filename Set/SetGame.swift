@@ -10,12 +10,6 @@ import Foundation
 struct SetGame {
     // MARK: Private Var(s)
     private(set) var cards: Array<Card> = []
-    private(set) var numberOfCardsLeftToDeal: Int = 0
-    
-    // MARK: Public Var(s)
-    var cardsInPlay: Array<Card> {
-        return cards.filter( { $0.isInPlay } )
-    }
     
     // MARK: Public Var(s)
     enum ShapeType: Int, CaseIterable {
@@ -56,30 +50,6 @@ struct SetGame {
         }
     }
     
-    mutating func clearCards() {
-        let matchedCardsOnTheBoard = cards.filter( { $0.isMatched && $0.isInPlay } )
-        
-        for card in matchedCardsOnTheBoard {
-            if let index = cards.firstIndex(where: { $0.id == card.id } ) {
-                    cards[index].isInPlay = false
-            }
-        }
-        
-        if cardsInPlay.count < 12 {
-            dealCards(3)
-        }
-    }
-    
-    // Marks the next 3 cards as in play and decrement the number of cards left to distribute.
-    mutating func dealCards(_ numberOfCards: Int) {
-        if let index = cards.firstIndex(where: { $0.isInPlay == false && $0.isMatched == false } ) {
-            for index in index..<(index + numberOfCards) {
-                cards[index].isInPlay = true
-            }
-            numberOfCardsLeftToDeal -= numberOfCards
-        }
-    }
-    
     // Creates a deck of cards with 4 dimensions.
     mutating func createSetGameDeck() -> Array<Card> {
         var cardIndex = 0
@@ -99,19 +69,16 @@ struct SetGame {
                 }
             }
         }
-        numberOfCardsLeftToDeal = 81
         return cards
     }
 
     // MARK: Init(s)
     init() {
         cards = createSetGameDeck()
-        cards.shuffle()
-        dealCards(12)
+        // cards.shuffle()
     }
     
     struct Card: Identifiable {
-        var isInPlay = false
         var isMatched = false
         let shape: ShapeType
         let color: ColorType

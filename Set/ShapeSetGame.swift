@@ -11,18 +11,8 @@ class ShapeSetGame: ObservableObject {
     // MARK: Public Var(s)
     typealias Card = SetGame.Card
     
-    var cards: Array<Card> {
+    var cards: [Card] {
         return setGameModel.cards
-    }
-    
-    // Enable the ShapeSetGameView to only display cards that are
-    // currently in play.
-    var cardsInPlay: Array<Card> {
-        return setGameModel.cardsInPlay
-    }
-    
-    var numberOfCardsLeftToDeal: Int {
-        return setGameModel.numberOfCardsLeftToDeal
     }
     
     // MARK: Private Var(s)
@@ -49,15 +39,6 @@ class ShapeSetGame: ObservableObject {
     
     func handleMatch(between selectedCards: [ShapeSetGame.Card]) {
         setGameModel.handleMatch(between: selectedCards)
-    }
-    
-    func clearCards() {
-        setGameModel.clearCards()
-    }
-    
-    // Deals a specific number of cards.
-    func dealCards(_ numberOfCards: Int) {
-        setGameModel.dealCards(numberOfCards)
     }
 }
 
