@@ -11,6 +11,7 @@ struct Card: View {
     // MARK: - Public Var(s)
     let card: ShapeSetGame.Card
     var isSelected: Bool
+    var isDiscarded: Bool
     @Binding public var match: Bool
     @Binding public var mismatch: Bool
     
@@ -111,19 +112,27 @@ struct Card: View {
             .padding(.horizontal, 10)
             .padding(.vertical, 5)
             
-            if match {
-                cardOutline.foregroundColor(.green)
-            } else if mismatch && isSelected {
-                cardOutline.stroke(.red)
+            if isSelected {
+                if match {
+                    // TODO: Show something cooler for a match.
+                    cardOutline.foregroundColor(.green)
+                    // TODO: Set match somewhere, like how we set match.
+                } else if mismatch {
+                    cardOutline.stroke(.red)
+                }
             }
         }
-        .rotation3DEffect(Angle.degrees(rotation), axis: (0, 1, 0))
+        // TODO: Fix the fact that this is moving everytime any card is modified.
+        .rotationEffect(Angle.degrees(isDiscarded ? Double.random(in: -30...30) : 0))
+        // TODO: Get the flip working.
+        // .rotation3DEffect(Angle.degrees(rotation), axis: (0, 1, 0))
     }
     
     // MARK: Init(s)
-    init(card: ShapeSetGame.Card, isFaceUp: Bool, isSelected: Bool, match: Binding<Bool>, mismatch: Binding<Bool>) {
+    init(card: ShapeSetGame.Card, isFaceUp: Bool, isSelected: Bool, isDiscarded: Bool, match: Binding<Bool>, mismatch: Binding<Bool>) {
         rotation = isFaceUp ? 0 : 180
         self.isSelected = isSelected
+        self.isDiscarded = isDiscarded
         self.card = card
         _match = match
         _mismatch = mismatch

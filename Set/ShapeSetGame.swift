@@ -41,4 +41,3 @@ class ShapeSetGame: ObservableObject {
         setGameModel.handleMatch(between: selectedCards)
     }
 }
-
