@@ -11,6 +11,8 @@ struct Card: View {
     // MARK: - Public Var(s)
     let card: ShapeSetGame.Card
     var isSelected: Bool
+    var isDiscarded: Bool
+    @Binding public var match: Bool
     @Binding public var mismatch: Bool
     
     var numberOfShapes: Int {
@@ -23,6 +25,21 @@ struct Card: View {
             case .purple: return .purple
             case .red: return .red
         }
+    }
+    
+    var animatableData: Double {
+        get { rotation }
+        set { rotation = newValue }
+    }
+    
+    var rotation: Double // in degrees
+    
+    // MARK: Private Var(s)
+    private struct DrawingConstants {
+        static let cardCornerRadius: CGFloat = 10
+        static let cardLineWidth: CGFloat = 0.5
+        static let shapeCornerRadius: CGFloat = 12
+        static let shapeLineWidth: CGFloat = 2
     }
     
     // MARK: Public Func(s)
@@ -82,31 +99,42 @@ struct Card: View {
     var body: some View {
         ZStack {
             let cardOutline = RoundedRectangle(cornerRadius: DrawingConstants.cardCornerRadius)
-            cardOutline.fill().foregroundColor(.white)
+            cardOutline.fill().foregroundColor(rotation < 90 ? .white : .red)
             cardOutline.stroke(lineWidth: isSelected ? DrawingConstants.cardLineWidth * 3 : DrawingConstants.cardLineWidth)
         
             VStack {
                 ForEach(0..<card.numberOfShapes + 1, id: \.self) { _ in
-                shapeBuilder(shape: card.shape, fill: card.fill, color: shapeColor).frame(maxHeight:40)
+                    shapeBuilder(shape: card.shape, fill: card.fill, color: shapeColor).frame(maxHeight:40)
+                    .opacity(rotation < 90 ? 1 : 0)
                 }
             }
             .foregroundColor(shapeColor)
             .padding(.horizontal, 10)
             .padding(.vertical, 5)
             
-            if card.isMatched {
-                cardOutline.foregroundColor(.green)
-                Text("Matched!")
-            } else if mismatch && isSelected {
-                cardOutline.stroke(.red)
+            if isSelected {
+                if match {
+                    // TODO: Show something cooler for a match.
+                    cardOutline.foregroundColor(.green)
+                    // TODO: Set match somewhere, like how we set match.
+                } else if mismatch {
+                    cardOutline.stroke(.red)
+                }
             }
         }
+        // TODO: Fix the fact that this is moving everytime any card is modified.
+        .rotationEffect(Angle.degrees(isDiscarded ? Double.random(in: -30...30) : 0))
+        // TODO: Get the flip working.
+        // .rotation3DEffect(Angle.degrees(rotation), axis: (0, 1, 0))
     }
     
-    private struct DrawingConstants {
-        static let cardCornerRadius: CGFloat = 10
-        static let cardLineWidth: CGFloat = 0.5
-        static let shapeCornerRadius: CGFloat = 12
-        static let shapeLineWidth: CGFloat = 2
+    // MARK: Init(s)
+    init(card: ShapeSetGame.Card, isFaceUp: Bool, isSelected: Bool, isDiscarded: Bool, match: Binding<Bool>, mismatch: Binding<Bool>) {
+        rotation = isFaceUp ? 0 : 180
+        self.isSelected = isSelected
+        self.isDiscarded = isDiscarded
+        self.card = card
+        _match = match
+        _mismatch = mismatch
     }
 }
