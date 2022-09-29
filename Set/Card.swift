@@ -99,7 +99,7 @@ struct Card: View {
     var body: some View {
         ZStack {
             let cardOutline = RoundedRectangle(cornerRadius: DrawingConstants.cardCornerRadius)
-            cardOutline.fill().foregroundColor(rotation < 90 ? .white : .red)
+            cardOutline.fill().foregroundColor(rotation < 90 ? .white : .gray)
             cardOutline.stroke(lineWidth: isSelected ? DrawingConstants.cardLineWidth * 3 : DrawingConstants.cardLineWidth)
         
             VStack {
@@ -114,9 +114,7 @@ struct Card: View {
             
             if isSelected {
                 if match {
-                    // TODO: Show something cooler for a match.
-                    cardOutline.foregroundColor(.green)
-                    // TODO: Set match somewhere, like how we set match.
+                    cardOutline.foregroundColor(.green).opacity(0.4)
                 } else if mismatch {
                     cardOutline.stroke(.red)
                 }

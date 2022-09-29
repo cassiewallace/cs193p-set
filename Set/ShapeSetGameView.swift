@@ -63,17 +63,8 @@ struct ShapeSetGameView: View {
         .frame(width: DrawingConstants.deckWidth, height: DrawingConstants.deckHeight)
         .onTapGesture {
             withAnimation(Animation.linear.delay(0.5)) {
-            // TODO: Refactor duplicated code into a new clearCards() function.
-                if selectedCards.count == 3 {
-                    if match {
-                        match = false
-                        for selectedCard in selectedCards {
-                            discardedCards.insert(selectedCard.id)
-                        }
-                    }
-                }
+                discard()
             }
-            selectedCards = []
             cardsToDeal = shapeSetGame.cards.filter( { !isDealt($0) && !$0.isMatched } )
             for cardToDeal in cardsToDeal.prefix(dealt.count == 0 ? 12 : 3) {
                 withAnimation(dealAnimation(for: cardToDeal)) {
@@ -116,9 +107,7 @@ struct ShapeSetGameView: View {
     
     // MARK: Private Func(s)
     private func newGame() {
-        selectedCards = []
-        discardedCards = []
-        dealt = []
+        (selectedCards, discardedCards, dealt) = ([], [], [])
         shapeSetGame.startNewGame()
         cardsToDeal = shapeSetGame.cards.filter( { !isDealt($0) && !$0.isMatched } )
     }
@@ -126,15 +115,7 @@ struct ShapeSetGameView: View {
     private func select(_ card: ShapeSetGame.Card) {
         mismatch = false
     
-        if selectedCards.count == 3 {
-            if match {
-                match = false
-                for selectedCard in selectedCards {
-                    discardedCards.insert(selectedCard.id)
-                }
-            }
-            selectedCards = []
-        }
+        discard()
         
         if selectedCards.count < 3 {
             if !isSelected(card) {
@@ -191,8 +172,16 @@ struct ShapeSetGameView: View {
         -Double(shapeSetGame.cards.index(matching: card) ?? 0)
     }
     
-    private func discard(_ card: ShapeSetGame.Card) {
-        discardedCards.insert(card.id)
+    private func discard() {
+        if selectedCards.count == 3 {
+            if match {
+                match = false
+                for selectedCard in selectedCards {
+                    discardedCards.insert(selectedCard.id)
+                }
+            }
+            selectedCards = []
+        }
     }
     
     private func isDiscarded(_ card: ShapeSetGame.Card) -> Bool {
