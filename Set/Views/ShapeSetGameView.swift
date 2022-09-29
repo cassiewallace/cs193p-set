@@ -15,11 +15,9 @@ struct ShapeSetGameView: View {
         NavigationView {
             VStack {
                 gameBody
-                HStack {
-                    deckBody
-                        .padding(.horizontal, 30)
+                HStack(spacing: 30) {
+                    undealtBody
                     discardBody
-                        .padding(.horizontal, 30)
                 }
             }
             .padding(.horizontal)
@@ -51,15 +49,8 @@ struct ShapeSetGameView: View {
             }
     }
     
-    var deckBody: some View {
-        // TODO: Refactor to deal with duplicated code with discardBody.
-        ZStack {
-            ForEach(shapeSetGame.cards.filter( { !isDealt($0) } )) { card in
-                Card(card: card, isFaceUp: isDealt(card), isSelected: isSelected(card), isDiscarded: isDiscarded(card), match: $match,  mismatch: $mismatch)
-                .matchedGeometryEffect(id: card.id, in: dealingNamespace)
-                .zIndex(zIndex(of: card))
-            }
-        }
+    var undealtBody: some View {
+        Deck(gameView: self, cards: shapeSetGame.cards.filter( { !isDealt($0) }), match: $match, mismatch: $mismatch, setZIndex: true, cardNamespace: dealingNamespace)
         .frame(width: DrawingConstants.deckWidth, height: DrawingConstants.deckHeight)
         .onTapGesture {
             withAnimation(Animation.linear.delay(0.5)) {
@@ -75,15 +66,8 @@ struct ShapeSetGameView: View {
     }
     
     var discardBody: some View {
-        ZStack {
-            ForEach(shapeSetGame.cards.filter(isDiscarded)) { card in
-                Card(card: card, isFaceUp: isDealt(card), isSelected: isSelected(card), isDiscarded: isDiscarded(card), match: $match, mismatch: $mismatch)
-                .matchedGeometryEffect(id: card.id, in: dealingNamespace)
-                // .zIndex(-zIndex(of: card))
-            }
-        }
+        Deck(gameView: self, cards: shapeSetGame.cards.filter(isDiscarded), match: $match, mismatch: $mismatch, setZIndex: true, cardNamespace: dealingNamespace)
         .frame(width: DrawingConstants.deckWidth, height: DrawingConstants.deckHeight)
-        .foregroundStyle(.black)
     }
     
     // MARK: Private Var(s)
@@ -103,6 +87,30 @@ struct ShapeSetGameView: View {
         static let deckWidth: CGFloat = deckHeight * aspectRatio
         static let dealDuration: Double = 0.5
         static let totalDealDuration: Double = 2
+    }
+    
+    // MARK: Public Func(s)
+    func isSelected(_ card: ShapeSetGame.Card) -> Bool {
+        if selectedCards.index(matching: card) != nil {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func isDealt(_ card: ShapeSetGame.Card) -> Bool {
+        dealt.contains(card.id)
+    }
+    
+    func isMatched(_ card: ShapeSetGame.Card) -> Bool {
+        if let index = shapeSetGame.cards.index(matching: card) {
+            return shapeSetGame.cards[index].isMatched
+        }
+        return false
+    }
+    
+    func isDiscarded(_ card: ShapeSetGame.Card) -> Bool {
+        discardedCards.contains(card.id)
     }
     
     // MARK: Private Func(s)
@@ -136,21 +144,9 @@ struct ShapeSetGameView: View {
             }
         }
     }
-    
-    private func isSelected(_ card: ShapeSetGame.Card) -> Bool {
-        if selectedCards.index(matching: card) != nil {
-            return true
-        } else {
-            return false
-        }
-    }
 
     private func deal(_ card: ShapeSetGame.Card) {
         dealt.insert(card.id)
-    }
-    
-    private func isDealt(_ card: ShapeSetGame.Card) -> Bool {
-        dealt.contains(card.id)
     }
     
     private func dealAnimation(for card: ShapeSetGame.Card) -> Animation {
@@ -159,17 +155,6 @@ struct ShapeSetGameView: View {
             delay = Double(index) * (DrawingConstants.totalDealDuration / Double(shapeSetGame.cards.count))
         }
         return Animation.easeInOut(duration: DrawingConstants.dealDuration).delay(delay)
-    }
-    
-    private func isMatched(_ card: ShapeSetGame.Card) -> Bool {
-        if let index = shapeSetGame.cards.index(matching: card) {
-            return shapeSetGame.cards[index].isMatched
-        }
-        return false
-    }
-    
-    private func zIndex(of card: ShapeSetGame.Card) -> Double {
-        -Double(shapeSetGame.cards.index(matching: card) ?? 0)
     }
     
     private func discard() {
@@ -182,10 +167,6 @@ struct ShapeSetGameView: View {
             }
             selectedCards = []
         }
-    }
-    
-    private func isDiscarded(_ card: ShapeSetGame.Card) -> Bool {
-        discardedCards.contains(card.id)
     }
 }
 
