@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CBA1A93328E5F76C00A817B5 /* UtilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA1A93228E5F76C00A817B5 /* UtilityExtensions.swift */; };
 		CBAB0B5028DA5261000E0B28 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAB0B4F28DA5261000E0B28 /* File.swift */; };
 		CBAB0B5228DBB68D000E0B28 /* Diamond.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAB0B5128DBB68D000E0B28 /* Diamond.swift */; };
 		CBEFABB228D9FC8C00273F61 /* SetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFABB128D9FC8C00273F61 /* SetApp.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CBA1A93228E5F76C00A817B5 /* UtilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityExtensions.swift; sourceTree = "<group>"; };
 		CBAB0B4F28DA5261000E0B28 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		CBAB0B5128DBB68D000E0B28 /* Diamond.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diamond.swift; sourceTree = "<group>"; };
 		CBEFABAE28D9FC8C00273F61 /* Set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Set.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +68,7 @@
 				CBAB0B4F28DA5261000E0B28 /* File.swift */,
 				CBEFABB128D9FC8C00273F61 /* SetApp.swift */,
 				CBEFABB328D9FC8C00273F61 /* ShapeSetGameView.swift */,
+				CBA1A93228E5F76C00A817B5 /* UtilityExtensions.swift */,
 				CBAB0B5128DBB68D000E0B28 /* Diamond.swift */,
 				CBEFABC728DA06F300273F61 /* Card.swift */,
 				CBEFABC528DA05B200273F61 /* AspectVGrid.swift */,
@@ -157,6 +160,7 @@
 			files = (
 				CBEFABC228DA028400273F61 /* ShapeSetGame.swift in Sources */,
 				CBEFABC828DA06F300273F61 /* Card.swift in Sources */,
+				CBA1A93328E5F76C00A817B5 /* UtilityExtensions.swift in Sources */,
 				CBEFABB428D9FC8C00273F61 /* ShapeSetGameView.swift in Sources */,
 				CBEFABC028DA027200273F61 /* SetGame.swift in Sources */,
 				CBEFABC628DA05B200273F61 /* AspectVGrid.swift in Sources */,

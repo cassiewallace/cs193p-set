@@ -44,7 +44,7 @@ struct SetGame {
         }
         
         for selectedCard in selectedCards {
-            if let selectedCardIndex = cards.firstIndex(where: { $0.id == selectedCard.id }) {
+            if let selectedCardIndex = cards.index(matching: selectedCard) {
                     cards[selectedCardIndex].isMatched = true
             }
         }

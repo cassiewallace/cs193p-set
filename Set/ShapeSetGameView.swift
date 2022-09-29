@@ -140,7 +140,7 @@ struct ShapeSetGameView: View {
             if !isSelected(card) {
                 selectedCards.append(card)
             } else if isSelected(card) {
-                let indexOfSelectedCard = selectedCards.firstIndex(where: { $0.id == card.id })!
+                let indexOfSelectedCard = selectedCards.index(matching: card)!
                 selectedCards.remove(at: indexOfSelectedCard)
             }
         }
@@ -157,7 +157,7 @@ struct ShapeSetGameView: View {
     }
     
     private func isSelected(_ card: ShapeSetGame.Card) -> Bool {
-        if selectedCards.firstIndex(where: { $0.id == card.id }) != nil {
+        if selectedCards.index(matching: card) != nil {
             return true
         } else {
             return false
@@ -174,21 +174,21 @@ struct ShapeSetGameView: View {
     
     private func dealAnimation(for card: ShapeSetGame.Card) -> Animation {
         var delay = 0.0
-        if let index = shapeSetGame.cards.firstIndex(where: { $0.id == card.id }) {
+        if let index = shapeSetGame.cards.index(matching: card) {
             delay = Double(index) * (DrawingConstants.totalDealDuration / Double(shapeSetGame.cards.count))
         }
         return Animation.easeInOut(duration: DrawingConstants.dealDuration).delay(delay)
     }
     
     private func isMatched(_ card: ShapeSetGame.Card) -> Bool {
-        if let index = shapeSetGame.cards.firstIndex(where: { $0.id == card.id }) {
+        if let index = shapeSetGame.cards.index(matching: card) {
             return shapeSetGame.cards[index].isMatched
         }
         return false
     }
     
     private func zIndex(of card: ShapeSetGame.Card) -> Double {
-        -Double(shapeSetGame.cards.firstIndex(where: { $0.id == card.id }) ?? 0)
+        -Double(shapeSetGame.cards.index(matching: card) ?? 0)
     }
     
     private func discard(_ card: ShapeSetGame.Card) {
