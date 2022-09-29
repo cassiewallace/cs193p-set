@@ -49,11 +49,37 @@
 		CB1B93BA28E6029400044BB2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CBEFABC528DA05B200273F61 /* AspectVGrid.swift */,
 				CBEFABB328D9FC8C00273F61 /* ShapeSetGameView.swift */,
 				CB1B93B828E6027E00044BB2 /* Deck.swift */,
 				CBEFABC728DA06F300273F61 /* Card.swift */,
+				CBAB0B5128DBB68D000E0B28 /* Diamond.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		CB1B93BB28E6132200044BB2 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				CBA1A93228E5F76C00A817B5 /* UtilityExtensions.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		CB1B93BC28E6137600044BB2 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				CBEFABC128DA028400273F61 /* ShapeSetGame.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		CB1B93BD28E6138500044BB2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CBEFABBF28DA027200273F61 /* SetGame.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		CBEFABA528D9FC8C00273F61 = {
@@ -75,13 +101,11 @@
 		CBEFABB028D9FC8C00273F61 /* Set */ = {
 			isa = PBXGroup;
 			children = (
+				CB1B93BC28E6137600044BB2 /* ViewModels */,
 				CB1B93BA28E6029400044BB2 /* Views */,
 				CBEFABB128D9FC8C00273F61 /* SetApp.swift */,
-				CBA1A93228E5F76C00A817B5 /* UtilityExtensions.swift */,
-				CBAB0B5128DBB68D000E0B28 /* Diamond.swift */,
-				CBEFABC528DA05B200273F61 /* AspectVGrid.swift */,
-				CBEFABBF28DA027200273F61 /* SetGame.swift */,
-				CBEFABC128DA028400273F61 /* ShapeSetGame.swift */,
+				CB1B93BB28E6132200044BB2 /* Utilities */,
+				CB1B93BD28E6138500044BB2 /* Models */,
 				CBEFABB528D9FC9600273F61 /* Assets.xcassets */,
 				CBEFABB728D9FC9600273F61 /* Preview Content */,
 			);

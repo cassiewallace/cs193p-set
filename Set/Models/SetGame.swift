@@ -75,7 +75,7 @@ struct SetGame {
     // MARK: Init(s)
     init() {
         cards = createSetGameDeck()
-        // cards.shuffle()
+        cards.shuffle()
     }
     
     struct Card: Identifiable {

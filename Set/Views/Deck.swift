@@ -19,7 +19,7 @@ struct Deck: View {
     var body: some View {
         ZStack {
             ForEach(cards) { card in
-                Card(card: card, isFaceUp: gameView.isDealt(card), isSelected: gameView.isSelected(card), isDiscarded: gameView.isDiscarded(card), match: $match,  mismatch: $mismatch)
+                Card(card: card, isDealt: gameView.isDealt(card), isSelected: gameView.isSelected(card), isDiscarded: gameView.isDiscarded(card), match: $match,  mismatch: $mismatch)
                 .if(setZIndex) { view in
                     view.zIndex(zIndex(of: card))
                 }

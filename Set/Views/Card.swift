@@ -32,7 +32,7 @@ struct Card: View {
         set { rotation = newValue }
     }
     
-    var rotation: Double // in degrees
+    var rotation: Double
     
     // MARK: Private Var(s)
     private struct DrawingConstants {
@@ -99,18 +99,17 @@ struct Card: View {
     var body: some View {
         ZStack {
             let cardOutline = RoundedRectangle(cornerRadius: DrawingConstants.cardCornerRadius)
-            cardOutline.fill().foregroundColor(rotation < 90 ? .white : .gray)
-            cardOutline.stroke(lineWidth: isSelected ? DrawingConstants.cardLineWidth * 3 : DrawingConstants.cardLineWidth)
-        
-            VStack {
-                ForEach(0..<card.numberOfShapes + 1, id: \.self) { _ in
-                    shapeBuilder(shape: card.shape, fill: card.fill, color: shapeColor).frame(maxHeight:40)
-                    .opacity(rotation < 90 ? 1 : 0)
+            if rotation < 90 {
+                cardOutline.fill().foregroundColor(.white)
+            } else {
+                if #available(iOS 16.0, *) {
+                    cardOutline.fill(Gradient(colors: [.blue, .black]))
+                    
+                } else {
+                    cardOutline.fill(.gray)
                 }
             }
-            .foregroundColor(shapeColor)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
+            cardOutline.stroke(lineWidth: isSelected ? DrawingConstants.cardLineWidth * 3 : DrawingConstants.cardLineWidth)
             
             if isSelected {
                 if match {
@@ -119,16 +118,22 @@ struct Card: View {
                     cardOutline.stroke(.red)
                 }
             }
+            
+            VStack {
+                ForEach(0..<card.numberOfShapes + 1, id: \.self) { _ in
+                    shapeBuilder(shape: card.shape, fill: card.fill, color: shapeColor).frame(maxHeight:40)
+                }
+            }
+            .foregroundColor(shapeColor)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .opacity(rotation < 90 ? 1 : 0)
         }
-        // TODO: Fix the fact that this is moving everytime any card is modified.
-        .rotationEffect(Angle.degrees(isDiscarded ? Double.random(in: -30...30) : 0))
-        // TODO: Get the flip working.
-        // .rotation3DEffect(Angle.degrees(rotation), axis: (0, 1, 0))
     }
     
     // MARK: Init(s)
-    init(card: ShapeSetGame.Card, isFaceUp: Bool, isSelected: Bool, isDiscarded: Bool, match: Binding<Bool>, mismatch: Binding<Bool>) {
-        rotation = isFaceUp ? 0 : 180
+    init(card: ShapeSetGame.Card, isDealt: Bool, isSelected: Bool, isDiscarded: Bool, match: Binding<Bool>, mismatch: Binding<Bool>) {
+        rotation = isDealt ? 0 : 180
         self.isSelected = isSelected
         self.isDiscarded = isDiscarded
         self.card = card

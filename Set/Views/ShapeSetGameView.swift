@@ -24,21 +24,21 @@ struct ShapeSetGameView: View {
             .navigationBarTitle("Set", displayMode: .inline)
             .navigationBarItems(leading:
                 Button {
-                        newGame()
-                for cardToDeal in cardsToDeal.prefix(12) {
-                    withAnimation(dealAnimation(for: cardToDeal)) {
-                        deal(cardToDeal)
+                    newGame()
+                    for cardToDeal in cardsToDeal.prefix(12) {
+                        withAnimation(dealAnimation(for: cardToDeal)) {
+                            deal(cardToDeal)
+                        }
                     }
-                }
-            } label: {
-                    Text("New Game")
-            })
+                } label: {
+                        Text("New Game")
+                })
         }
     }
     
     var gameBody: some View {
         AspectVGrid(items: shapeSetGame.cards.filter( { isDealt($0) && !isDiscarded($0) } ), aspectRatio: DrawingConstants.aspectRatio) { card in
-                Card(card: card, isFaceUp: isDealt(card), isSelected: isSelected(card), isDiscarded: isDiscarded(card), match: $match, mismatch: $mismatch)
+                Card(card: card, isDealt: isDealt(card), isSelected: isSelected(card), isDiscarded: isDiscarded(card), match: $match, mismatch: $mismatch)
                     .matchedGeometryEffect(id: card.id, in: dealingNamespace)
                     .padding(DrawingConstants.cardPadding)
                     .onTapGesture {
@@ -66,12 +66,11 @@ struct ShapeSetGameView: View {
     }
     
     var discardBody: some View {
-        Deck(gameView: self, cards: shapeSetGame.cards.filter(isDiscarded), match: $match, mismatch: $mismatch, setZIndex: true, cardNamespace: dealingNamespace)
+        Deck(gameView: self, cards: shapeSetGame.cards.filter(isDiscarded), match: $match, mismatch: $mismatch, setZIndex: false, cardNamespace: dealingNamespace)
         .frame(width: DrawingConstants.deckWidth, height: DrawingConstants.deckHeight)
     }
     
     // MARK: Private Var(s)
-    // TODO: Can I use a state object? This is getting unruly.
     @State private var dealt = Set<Int>()
     @State private var discardedCards = Set<Int>()
     @State private var cardsToDeal = [ShapeSetGame.Card]()
@@ -122,7 +121,6 @@ struct ShapeSetGameView: View {
     
     private func select(_ card: ShapeSetGame.Card) {
         mismatch = false
-    
         discard()
         
         if selectedCards.count < 3 {
@@ -138,7 +136,6 @@ struct ShapeSetGameView: View {
             if shapeSetGame.checkForMatch(between: selectedCards) {
                 shapeSetGame.handleMatch(between: selectedCards)
                 match = true
-                
             } else {
                 mismatch = true
             }
