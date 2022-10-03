@@ -26,7 +26,7 @@ struct ShapeSetGameView: View {
                 Button {
                     newGame()
                     for cardToDeal in cardsToDeal.prefix(12) {
-                        withAnimation(dealAnimation(for: cardToDeal)) {
+                        withAnimation() {
                             deal(cardToDeal)
                         }
                     }

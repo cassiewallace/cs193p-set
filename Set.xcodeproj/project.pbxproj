@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB02AB9728EA223400F0B321 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB02AB9628EA223400F0B321 /* Circle.swift */; };
+		CB02AB9928EA22FC00F0B321 /* RoundedRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB02AB9828EA22FC00F0B321 /* RoundedRectangle.swift */; };
 		CB1B93B928E6027E00044BB2 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B93B828E6027E00044BB2 /* Deck.swift */; };
 		CBA1A93328E5F76C00A817B5 /* UtilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA1A93228E5F76C00A817B5 /* UtilityExtensions.swift */; };
 		CBAB0B5228DBB68D000E0B28 /* Diamond.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAB0B5128DBB68D000E0B28 /* Diamond.swift */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CB02AB9628EA223400F0B321 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
+		CB02AB9828EA22FC00F0B321 /* RoundedRectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectangle.swift; sourceTree = "<group>"; };
 		CB1B93B828E6027E00044BB2 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		CBA1A93228E5F76C00A817B5 /* UtilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityExtensions.swift; sourceTree = "<group>"; };
 		CBAB0B5128DBB68D000E0B28 /* Diamond.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diamond.swift; sourceTree = "<group>"; };
@@ -54,6 +58,8 @@
 				CB1B93B828E6027E00044BB2 /* Deck.swift */,
 				CBEFABC728DA06F300273F61 /* Card.swift */,
 				CBAB0B5128DBB68D000E0B28 /* Diamond.swift */,
+				CB02AB9628EA223400F0B321 /* Circle.swift */,
+				CB02AB9828EA22FC00F0B321 /* RoundedRectangle.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -195,8 +201,10 @@
 				CB1B93B928E6027E00044BB2 /* Deck.swift in Sources */,
 				CBA1A93328E5F76C00A817B5 /* UtilityExtensions.swift in Sources */,
 				CBEFABB428D9FC8C00273F61 /* ShapeSetGameView.swift in Sources */,
+				CB02AB9728EA223400F0B321 /* Circle.swift in Sources */,
 				CBEFABC028DA027200273F61 /* SetGame.swift in Sources */,
 				CBEFABC628DA05B200273F61 /* AspectVGrid.swift in Sources */,
+				CB02AB9928EA22FC00F0B321 /* RoundedRectangle.swift in Sources */,
 				CBEFABB228D9FC8C00273F61 /* SetApp.swift in Sources */,
 				CBAB0B5228DBB68D000E0B28 /* Diamond.swift in Sources */,
 			);
