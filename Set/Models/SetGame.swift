@@ -7,28 +7,27 @@
 
 import Foundation
 
+enum ShapeType: Int, CaseIterable {
+    case circle
+    case diamond
+    case squiggle
+}
+
+enum ColorType: Int, CaseIterable {
+    case green
+    case purple
+    case red
+}
+
+enum FillType: Int, CaseIterable {
+    case empty
+    case shaded
+    case solid
+}
+
 struct SetGame {
     // MARK: Private Var(s)
     private(set) var cards: Array<Card> = []
-    
-    // MARK: Public Var(s)
-    enum ShapeType: Int, CaseIterable {
-        case circle
-        case diamond
-        case squiggle
-    }
-    
-    enum ColorType: Int, CaseIterable {
-        case green
-        case purple
-        case red
-    }
-    
-    enum FillType: Int, CaseIterable {
-        case empty
-        case shaded
-        case solid
-    }
     
     // MARK: Public Func(s)
     func isValidMatch(c1: Card, c2: Card, c3: Card) -> Bool {
